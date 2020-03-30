@@ -8,7 +8,7 @@
             <div class="container-fluid d-flex align-items-center">
                 <div class="row">
                     <div class="col-lg-7 col-md-10">
-                        <h1 class="display-2 text-white">Hello Jesse</h1>
+                        <h1 class="display-2 text-white">Hello {{model.firstName}}</h1>
                         <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
                         <a href="#!" class="btn btn-info">Edit profile</a>
                     </div>
@@ -98,7 +98,7 @@
                                                         label="Username"
                                                         placeholder="Username"
                                                         input-classes="form-control-alternative"
-                                                        v-model="model.username"
+                                                        v-model="model.email"
                                             />
                                         </div>
                                         <div class="col-lg-6">
@@ -131,7 +131,7 @@
                                 </div>
                                 <hr class="my-4" />
                                 <!-- Address -->
-                                <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                                <h6 class="heading-small text-muted mb-4">Home Address</h6>
                                 <div class="pl-lg-4">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -172,13 +172,35 @@
                                 </div>
                                 <hr class="my-4" />
                                 <!-- Description -->
-                                <h6 class="heading-small text-muted mb-4">About me</h6>
+                                <h6 class="heading-small text-muted mb-4">{{hospital.NAME}}</h6>
                                 <div class="pl-lg-4">
-                                    <div class="form-group">
-                                        <base-input alternative=""
-                                                    label="About Me">
-                                            <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
-                                        </base-input>
+                                      <div class="row">
+                                        <div class="col-md-12">
+                                            <base-input alternative=""
+                                                        label="Address"
+                                                        placeholder="Home Address"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="hospital.ADDRESS"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <base-input alternative=""
+                                                        label="City"
+                                                        placeholder="City"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="hospital.CITY"
+                                            />
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <base-input alternative=""
+                                                        label="Postal code"
+                                                        placeholder="Postal code"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="hospital.ZIP"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -190,13 +212,31 @@
     </div>
 </template>
 <script>
+import Auth from '@okta/okta-vue'
+import axios from "axios";
   export default {
     name: 'user-profile',
+    async mounted() {
+        this.model = await this.$auth.getUser()
+        console.log(this.model)
+        console.log("http://localhost:4000/providers/" + this.model.healthcare_provider_id)
+        var result = await axios.get("http://localhost:4000/providers/" + this.model.healthcare_provider_id)
+        this.hospital = result.data
+     
+    },
     data() {
       return {
+        hospital: {
+            NAME: '',
+            ADDRESS: '',
+            ZIP: '',
+            STATE: '',
+            CITY: ''
+        },
         model: {
           username: '',
           email: '',
+          hospitalTitle: '',
           firstName: '',
           lastName: '',
           address: '',

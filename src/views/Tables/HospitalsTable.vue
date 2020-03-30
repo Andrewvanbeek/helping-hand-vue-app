@@ -176,6 +176,7 @@ export default {
       .then(function(response) {
         // handle success
         var hospitalData = [];
+        var firebaseObject = {}
         var i;
         for (i = 0; i < 200; i++) {
           var hospital = response.data.features[i].attributes;
@@ -184,7 +185,9 @@ export default {
           hospital["masks"] = 10;
           hospital["gloves"] = 10;
           hospitalData.push(hospital);
+          firebaseObject[hospital.ID] = hospital
         }
+        console.log(firebaseObject)
         console.log(hospitalData);
         component.tableData = hospitalData;
       })
@@ -198,8 +201,8 @@ export default {
   },
   methods: {
     imageLoadError(row) {
-      console.log(row);
-      console.log("Image failed to load");
+      // console.log(row);
+      // console.log("Image failed to load");
       var image = row.target;
       image.src = "img/brand/Helping-Hand.png";
     }

@@ -9,9 +9,16 @@
           <form role="form">
             <base-input
               class="input-group-alternative mb-3"
-              placeholder="Name"
+              placeholder="First Name"
               addon-left-icon="ni ni-hat-3"
-              v-model="model.name"
+              v-model="model.firstName"
+            ></base-input>
+
+             <base-input
+              class="input-group-alternative mb-3"
+              placeholder="Last Name"
+              addon-left-icon="ni ni-hat-3"
+              v-model="model.lastName"
             ></base-input>
 
             <base-input
@@ -25,7 +32,7 @@
               class="input-group-alternative mb-3"
               placeholder="Zip Code"
               addon-left-icon="ni ni-pin-3"
-              v-model="model.zipcode"
+              v-model="model.zipCode"
             ></base-input>
 
             <base-input
@@ -43,15 +50,7 @@
               v-model="model.password"
             ></base-input>
 
-         <base-dropdown class="provider-drop">
-
-              <base-button slot="title" type="secondary" class="dropdown-toggle">Provider</base-button>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else hereSomething else hereSomething else hereSomething else here</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
-            </base-dropdown>
+           <v-select label="NAME" :options="providers" v-model="model.provider"></v-select>
 
             <div class="text-muted font-italic">
               <small>
@@ -71,7 +70,7 @@
               </div>
             </div>
             <div class="text-center">
-              <base-button type="primary" class="my-4">Create account</base-button>
+              <base-button v-on:click="register()" type="primary" class="my-4">Create account</base-button>
             </div>
           </form>
         </div>
@@ -92,14 +91,55 @@
   </div>
 </template>
 <script>
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
+import axios from "axios";
+
 export default {
   name: "register",
+  components: {
+    vSelect
+  },
+  mounted(){
+    var component = this;
+    axios
+      .get(
+        "https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json"
+      )
+      .then(function(response) {
+        // handle success
+        var hospitalData = [];
+        var i;
+        for (i = 0; i < 200; i++) {
+          var hospital = response.data.features[i].attributes;
+          hospital["img"] = "https://logo.clearbit.com/" + hospital.WEBSITE;
+          hospitalData.push(hospital);
+        }
+        component.providers = hospitalData;
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function() {
+        // always executed
+      });
+
+  },
+  methods: {
+      async register(){
+          var result = axios.post("http://localhost:4000/register", this.model)
+          window.location.href = "http://localhost:8080"
+      }
+  },
   data() {
     return {
+    providers: "",
       model: {
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
-        zipcode: "",
+        zipCode: "",
         company: "",
         password: "",
         PI_Number: "",

@@ -59,6 +59,11 @@ const router= new Router({mode: 'history',
           path: '/hospitals',
           name: 'hospitals',
           component: () => import(/* webpackChunkName: "demo" */ './views/Hospitals.vue')
+        },
+        {
+          path: '/hands',
+          name: 'hands',
+          component: () => import(/* webpackChunkName: "demo" */ './views/Hands.vue')
         }
       ]
     },
@@ -86,6 +91,11 @@ const router= new Router({mode: 'history',
           path: '/donater-register',
           name: 'DonaterRegister',
           component: () => import(/* webpackChunkName: "demo" */ './views/DonaterRegister.vue')
+        },
+        {
+          path: '/provider-register',
+          name: 'ProviderRegister',
+          component: () => import(/* webpackChunkName: "demo" */ './views/ProviderRegister.vue')
         },
         {
           path: '/fast-donate',

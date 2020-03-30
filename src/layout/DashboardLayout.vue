@@ -16,7 +16,7 @@
 
         <sidebar-item :link="{name: 'Icons', icon: 'ni ni-planet text-blue', path: '/icons'}"/>
         <sidebar-item :link="{name: 'Maps', icon: 'ni ni-pin-3 text-orange', path: '/maps'}"/>
-        <sidebar-item :link="{name: 'Messages', icon: 'ni ni-pin-3 text-orange', path: '/messages'}"/>
+        <sidebar-item :link="{name: 'Helping Hands', icon: 'ni ni-pin-3 text-orange', path: '/hands'}"/>
         <sidebar-item :link="{name: 'User Profile', icon: 'ni ni-single-02 text-yellow', path: '/profile'}"/>
 
 

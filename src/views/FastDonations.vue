@@ -42,7 +42,7 @@
               <div class="text-center text-muted mb-4">
                 <base-button
                   tag="a"
-                  v-on:click="openDonationModal('masks')"
+                  v-on:click="openDonationModal('mask')"
                   outline
                   type="info"
                   size="lg"
@@ -138,6 +138,12 @@
               <form role="form">
                 <base-input
                   class="input-group-alternative mb-3"
+                  placeholder="Your Name"
+                  addon-left-icon="ni ni-pin-3"
+                  v-model="name"
+                ></base-input>
+                <base-input
+                  class="input-group-alternative mb-3"
                   placeholder="Your City"
                   addon-left-icon="ni ni-pin-3"
                   v-model="city"
@@ -149,10 +155,23 @@
                   addon-left-icon="ni ni-pin-3"
                   v-model="zipcode"
                 ></base-input>
-                <v-select label="name" :options="states"  v-model="state"></v-select>
+                <v-select label="name" :options="states" v-model="state"></v-select>
 
                 <h3>Quantity: {{sliders.quantity}}</h3>
                 <base-slider v-model="sliders.quantity" :range="{min: 0, max: 100}"></base-slider>
+                <br><br>
+                <h3>Days Estimated To Ship: {{sliders.daysNeededToShip}}</h3>
+                <base-slider v-model="sliders.daysNeededToShip" :range="{min: 0, max: 40}"></base-slider>
+                <base-button
+                  tag="a"
+                  v-on:click="getMatchingProviders()"
+                  outline
+                  type="info"
+                  size="lg"
+                  class="active"
+                  role="button"
+                  aria-pressed="true"
+                >Donate</base-button>
               </form>
             </div>
           </div>
@@ -167,6 +186,25 @@
                 <small>Login into your account</small>
               </router-link>
             </div>
+          </div>
+        </div>
+      </div>
+    </pop-modal>
+    <pop-modal name="providerresult" width="80%" height="auto" :scrollable="true">
+         <div class="card bg-secondary shadow border-0">
+        <div class="card-header bg-transparent pb-5">
+          <div class="text-muted text-center mt-2 mb-3">
+            <div class="reg-message">
+              <h1>{{providerToDonateTo.NAME}} is close to you and needs {{donationItem}}</h1>
+              <img src="img/brand/hospital.png" />
+              <br>
+              <br><h3>Their Address is {{providerToDonateTo.ADDRESS}}, {{providerToDonateTo.CITY}}, {{providerToDonateTo.STATE}}, {{providerToDonateTo.ZIP}}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body px-lg-5 py-lg-5">
+          <div class="text-center text-muted mb-4">
+            <base-button tag="a" outline type="info" size="lg" v-on:click="helpOnTheWay()" class="active" role="button" aria-pressed="true">Let them Know a helping hand is on the way?</base-button>
           </div>
         </div>
       </div>
@@ -195,6 +233,7 @@ export default {
       donationItemImage: "",
       state: "Select State",
       city: "",
+      name: "",
       zipcode: "",
       states: [
         {
@@ -479,8 +518,11 @@ export default {
         email: "",
         password: ""
       },
+      providerToDonateTo: "",
+      tableData: [],
       sliders: {
         quantity: 0,
+        daysNeededToShip: 0,
         donationItem: "gloves"
       }
     };
@@ -488,9 +530,16 @@ export default {
   methods: {
     async openDonationModal(item) {
       console.log(item);
-      this.donationItem = item;
+      var items = {"gloves": "gloves", "face-sheild": "face sheilds", "hand-sanitizer": "hand sanitizer", "mask": "masks"}
+      this.donationItem = items[item]
       this.donationItemImage = "img/brand/" + item + ".png";
       this.$modal.show("donations");
+    },
+    imageLoadError(row) {
+      console.log(row);
+      console.log("Image failed to load");
+      var image = row.target;
+      image.src = "img/brand/Helping-Hand.png";
     },
     onChange(event) {
       console.log(event);
@@ -502,6 +551,33 @@ export default {
     methodToRunOnSelect(payload) {
       console.log(payload);
       this.state = payload.name;
+    },
+    async helpOnTheWay() {
+        console.log(this.sliders)
+        result = await axios.post("http://localhost:4000/providers-hands", {"supplies": this.donationItem, quantity: this.sliders.quantity, donatername: this.name, "shipEstimate": this.sliders.daysNeededToShip, "provider": this.providerToDonateTo})
+    },
+    async getMatchingProviders() {
+        var component = this
+        var component = this
+        var result = await axios.get("http://localhost:4000/providers?ZIP=" + component.zipcode)
+        console.log(result)
+        if(!result.data.providers) {
+            result = await axios.get("http://localhost:4000/providers?CITY=" + component.city)
+        }
+        console.log(result)
+        if(!result.data.providers) {
+            result = await axios.get("http://localhost:4000/providers?STATE=" + component.state.abbreviation)
+        }
+        console.log(result)
+        if(result.data.providers){
+            component.openResultModal(result.data.providers)
+        }
+    },
+    async openResultModal(results){
+        var result = results[0]
+        this.providerToDonateTo = result
+        this.$modal.hide("donations")
+        this.$modal.show("providerresult");
     }
   },
   mounted() {

@@ -20,7 +20,7 @@
                   <img alt="Image placeholder" src="img/theme/team-4-800x800.jpg">
                 </span>
                         <div class="media-body ml-2 d-none d-lg-block">
-                            <span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+                            <span class="mb-0 text-sm  font-weight-bold">{{username}}</span>
                         </div>
                     </div>
 
@@ -60,8 +60,14 @@ import Auth from '@okta/okta-vue'
       return {
         activeNotifications: false,
         showMenu: false,
-        searchQuery: ''
+        searchQuery: '',
+        username: ''
       };
+    },
+    async mounted(){
+      var user = await this.$auth.getUser()
+      console.log(user)
+      this.username = user.email
     },
     methods: {
       toggleSidebar() {
