@@ -91,7 +91,7 @@
         </div>
         <div class="card-body px-lg-5 py-lg-5">
           <div class="text-center text-muted mb-4">
-            <base-button tag="a" outline type="info" size="lg" href="/provider-register" class="active" role="button" aria-pressed="true">Go</base-button>
+            <base-button tag="a" outline type="info" size="lg" href="/fast-donate" class="active" role="button" aria-pressed="true">Go</base-button>
           </div>
         </div>
       </div>

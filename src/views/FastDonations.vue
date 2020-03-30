@@ -574,7 +574,7 @@ export default {
         }
     },
     async openResultModal(results){
-        var result = results[0]
+        var result = results[Math.floor(Math.random() * results.length)]
         this.providerToDonateTo = result
         this.$modal.hide("donations")
         this.$modal.show("providerresult");

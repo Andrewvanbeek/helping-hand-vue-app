@@ -2,6 +2,9 @@
 node_modules
 /dist
 
+hackathon.mov
+helpinghand.io.mov
+
 # local env files
 .env.local
 .env.*.local

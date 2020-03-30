@@ -125,7 +125,7 @@
     props: {
       logo: {
         type: String,
-        default: 'img/brand/Helping-Hand.png',
+        default: '/img/brand/Helping-Hand.png',
         description: 'Sidebar app logo'
       },
       autoClose: {
