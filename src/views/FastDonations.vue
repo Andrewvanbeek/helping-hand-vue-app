@@ -139,7 +139,7 @@
                 <base-input
                   class="input-group-alternative mb-3"
                   placeholder="Your City"
-                  addon-left-icon="ni ni-email-83"
+                  addon-left-icon="ni ni-pin-3"
                   v-model="city"
                 ></base-input>
 
