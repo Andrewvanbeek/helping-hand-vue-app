@@ -20,6 +20,11 @@ import App from './App.vue'
 import router from './router'
 import './registerServiceWorker'
 import ArgonDashboard from './plugins/argon-dashboard'
+import VModal from 'vue-js-modal'
+
+
+
+Vue.use(VModal, { componentName: "pop-modal" })
 
 Vue.config.productionTip = false
 

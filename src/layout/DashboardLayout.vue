@@ -8,18 +8,18 @@
       <template slot="links">
         <sidebar-item
           :link="{
-            name: 'Dashboard',
-            icon: 'ni ni-tv-2 text-primary',
-            path: '/dashboard'
+            name: 'Hospitals',
+            icon: 'fa fa-hospital-alt text-primary',
+            path: '/hospitals'
           }"
         />
 
         <sidebar-item :link="{name: 'Icons', icon: 'ni ni-planet text-blue', path: '/icons'}"/>
         <sidebar-item :link="{name: 'Maps', icon: 'ni ni-pin-3 text-orange', path: '/maps'}"/>
+        <sidebar-item :link="{name: 'Messages', icon: 'ni ni-pin-3 text-orange', path: '/messages'}"/>
         <sidebar-item :link="{name: 'User Profile', icon: 'ni ni-single-02 text-yellow', path: '/profile'}"/>
-        <sidebar-item :link="{name: 'Tables', icon: 'ni ni-bullet-list-67 text-red', path: '/tables'}"/>
-        <sidebar-item :link="{name: 'Login', icon: 'ni ni-key-25 text-info', path: '/login'}"/>
-        <sidebar-item :link="{name: 'Register', icon: 'ni ni-circle-08 text-pink', path: '/register'}"/>
+
+
 
       </template>
     </side-bar>
@@ -61,5 +61,9 @@
     }
   };
 </script>
-<style lang="scss">
+<style>
+.bg-gradient-success {
+  background: rgb(252,129,135);
+background: linear-gradient(90deg, rgba(252,129,135,1) 0%, rgba(251,58,148,1) 100%);
+}
 </style>

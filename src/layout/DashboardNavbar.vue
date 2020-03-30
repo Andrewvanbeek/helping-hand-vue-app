@@ -45,10 +45,8 @@
                             <span>Support</span>
                         </router-link>
                         <div class="dropdown-divider"></div>
-                        <router-link to="/profile" class="dropdown-item">
                             <i class="ni ni-user-run"></i>
-                            <span>Logout</span>
-                        </router-link>
+                            <span v-on:click="logout()">Logout</span>
                     </template>
                 </base-dropdown>
             </li>
@@ -56,6 +54,7 @@
     </base-nav>
 </template>
 <script>
+import Auth from '@okta/okta-vue'
   export default {
     data() {
       return {
@@ -68,6 +67,11 @@
       toggleSidebar() {
         this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
       },
+      async logout() {
+      console.log("here")
+      await this.$auth.logout()
+      window.location.href = "http://localhost:8080"
+      },
       hideSidebar() {
         this.$sidebar.displaySidebar(false);
       },
@@ -77,3 +81,9 @@
     }
   };
 </script>
+<style>
+.bg-gradient-success {
+  background: rgb(252,129,135);
+background: linear-gradient(90deg, rgba(252,129,135,1) 0%, rgba(251,58,148,1) 100%);
+}
+</style>

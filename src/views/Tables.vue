@@ -1,6 +1,6 @@
 <template>
     <div>
-        <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-8">
+        <base-header type="gradient-hand" class="pb-6 pb-8 pt-5 pt-md-8">
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-3 col-lg-6">
@@ -83,4 +83,11 @@
     }
   };
 </script>
-<style></style>
+<style>
+
+.bg-gradient-hand {
+  background: rgb(252,129,135);
+background: linear-gradient(90deg, rgba(252,129,135,1) 0%, rgba(251,58,148,1) 100%);
+}
+
+</style>

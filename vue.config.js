@@ -11,8 +11,8 @@ module.exports = {
     ]
   },
   pwa: {
-    name: 'Vue Argon Dashboard',
-    themeColor: '#172b4d',
+    name: 'Helping Hand',
+    themeColor: '#fc8187',
     msTileColor: '#172b4d',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: '#172b4d'

@@ -67,4 +67,9 @@
   }
 </script>
 <style>
+a.navbar-brand.router-link-active img {
+    height: 100px;
+    width: 100px;
+    background-color: #f2eaf2;
+}
 </style>

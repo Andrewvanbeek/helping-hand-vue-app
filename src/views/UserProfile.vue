@@ -3,7 +3,7 @@
         <base-header class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
                      style="min-height: 600px; background-image: url(img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
             <!-- Mask -->
-            <span class="mask bg-gradient-success opacity-8"></span>
+            <span class="mask bg-gradient-hand opacity-8"></span>
             <!-- Header container -->
             <div class="container-fluid d-flex align-items-center">
                 <div class="row">
@@ -209,4 +209,9 @@
     },
   };
 </script>
-<style></style>
+<style>
+.bg-gradient-hand {
+  background: rgb(252,129,135);
+background: linear-gradient(90deg, rgba(252,129,135,1) 0%, rgba(251,58,148,1) 100%);
+}
+</style>

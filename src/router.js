@@ -2,14 +2,29 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import DashboardLayout from '@/layout/DashboardLayout'
 import AuthLayout from '@/layout/AuthLayout'
+import Auth from '@okta/okta-vue'
+ 
+Vue.use(Auth, {
+  issuer: 'https://dev-165774.okta.com/oauth2/default',
+  clientId: '0oa51ovro3GDX14pX4x6',
+  redirectUri: 'http://localhost:8080/implicit/callback',
+  scopes: ['openid', 'profile', 'email'],
+  pkce: true
+})
+ 
+
 Vue.use(Router)
 
-export default new Router({
+const router= new Router({mode: 'history',
   linkExactActiveClass: 'active',
   routes: [
+    { path: '/implicit/callback', component: Auth.handleCallback() },
     {
       path: '/',
       redirect: 'dashboard',
+      meta: {
+        requiresAuth: true
+      },
       component: DashboardLayout,
       children: [
         {
@@ -39,6 +54,11 @@ export default new Router({
           path: '/tables',
           name: 'tables',
           component: () => import(/* webpackChunkName: "demo" */ './views/Tables.vue')
+        },
+        {
+          path: '/hospitals',
+          name: 'hospitals',
+          component: () => import(/* webpackChunkName: "demo" */ './views/Hospitals.vue')
         }
       ]
     },
@@ -56,8 +76,27 @@ export default new Router({
           path: '/register',
           name: 'register',
           component: () => import(/* webpackChunkName: "demo" */ './views/Register.vue')
+        },
+        {
+          path: '/welcome',
+          name: 'ChooseRegistration',
+          component: () => import(/* webpackChunkName: "demo" */ './views/ChooseRegistration.vue')
+        },
+        {
+          path: '/donater-register',
+          name: 'DonaterRegister',
+          component: () => import(/* webpackChunkName: "demo" */ './views/DonaterRegister.vue')
+        },
+        {
+          path: '/fast-donate',
+          name: 'FastDonations',
+          component: () => import(/* webpackChunkName: "demo" */ './views/FastDonations.vue')
         }
       ]
     }
   ]
 })
+
+router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
+
+export default router

@@ -66,7 +66,7 @@ export default {
       slider.on("slide", () => {
         let value = slider.get();
         if (value !== this.value) {
-          this.$emit("input", value);
+          this.$emit("input", value.toString().split(".")[0]);
         }
       });
     }
