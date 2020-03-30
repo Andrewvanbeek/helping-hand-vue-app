@@ -36,7 +36,9 @@
                 <img alt="Image placeholder" :src="row.img" @error="imageLoadError" />
               </a>
               <div class="media-body">
+                <router-link :to="{ name: 'hospital', params: {id: row.ID } }">
                 <span class="name mb-0 text-sm">{{row.NAME}}</span>
+                </router-link>
               </div>
             </div>
           </th>

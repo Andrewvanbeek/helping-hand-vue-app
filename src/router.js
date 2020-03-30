@@ -61,6 +61,16 @@ const router= new Router({mode: 'history',
           component: () => import(/* webpackChunkName: "demo" */ './views/Hospitals.vue')
         },
         {
+          path: '/my-hospital',
+          name: 'My Hospital',
+          component: () => import(/* webpackChunkName: "demo" */ './views/YourHospital.vue')
+        },
+        {
+          path: '/hospitals/:id',
+          name: 'hospital',
+          component: () => import(/* webpackChunkName: "demo" */ './views/Hospital.vue')
+        },
+        {
           path: '/hands',
           name: 'hands',
           component: () => import(/* webpackChunkName: "demo" */ './views/Hands.vue')
